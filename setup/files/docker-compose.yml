@@ -1,0 +1,90 @@
+version: "3.8"
+
+services:    
+  db:
+    env_file:
+      - .env
+    build: ./mariadb/.
+    container_name: maria-cont
+    image: mariadb:mytag
+    restart: always
+    networks:
+      - app-network
+    volumes:
+      - DataBase:/var/lib/mysql/
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-u$$MY_USER", "-p$$MY_PASS"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+
+  wordpress:
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    build: ./wordpress/.
+    container_name: wordpress-cont
+    image: wordpress:mytag
+    restart: always
+    volumes:
+      - Wordpress:/var/www/wordpress
+    networks:
+      - app-network
+    
+  phpmyadmin:
+    depends_on:
+      - db
+    env_file:
+      - .env
+    image: phpmyadmin:fpm
+    container_name: phpmyadmin-cont
+    restart: always
+    volumes:
+      - PhpMyAdmin:/var/www/html
+    networks:
+      - app-network
+
+  nginx:
+    depends_on:
+      - wordpress
+      - phpmyadmin
+    build: ./nginx/.
+    container_name: nginx-cont
+    image: nginx:mytag
+    ports:
+      - "80:80"
+    restart: always
+    volumes:
+      - Wordpress:/var/www/wordpress
+      - PhpMyAdmin:/var/www/html
+    networks:
+      - app-network
+  
+
+
+volumes:
+  Wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /etc/files
+  DataBase:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /etc/db
+  PhpMyAdmin:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /etc/phpmyadmin
+  
+networks:
+  app-network:
+    name: web-network

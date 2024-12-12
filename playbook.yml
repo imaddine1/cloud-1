@@ -1,0 +1,6 @@
+- name: ALL IN ONE
+  hosts: my_vms
+  become: true
+  serial: 2
+  roles:
+    - setup

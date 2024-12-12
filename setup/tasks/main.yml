@@ -1,0 +1,54 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for setup
+- name: Export the IP address of the remote node to /etc/environment
+  lineinfile:
+    path: /etc/environment
+    line: "ip_addr={{ ansible_host }}"
+    create: yes
+
+- name: Source /etc/environment to apply the new environment variable
+  shell: source /etc/environment
+  args:
+    executable: /bin/bash
+
+- name: Install docker 
+  apt:
+    name: docker.io
+    state: present
+
+- name: Install docker-compose
+  apt:
+    name: docker-compose
+    state: present
+- name: Create a directory for binding DB
+  file:
+    path: /etc/db
+    state: directory
+    mode: '0755'
+- name: Create a directory for binding Wordpress
+  file:
+    path: /etc/files
+    state: directory
+    mode: '0755'
+- name: Create a directory for binding PhpMyAdmin
+  file: 
+    path: /etc/phpmyadmin
+    state: directory
+    mode: '0755'
+
+- name: Copy files to remote node
+  copy:
+    src: files/
+    dest: /home/application
+    mode: '0755'
+  
+- name: run docker-compose
+  command: docker-compose up --build -d
+  args: 
+    chdir: /home/application
+  async: 300
+  poll: 30
+
+
+
