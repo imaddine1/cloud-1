@@ -12,6 +12,9 @@ Ansible is an open-source automation tool used for IT tasks such as:
 
 - Network Automation: Automating network devices and operations.
 
+## Playground: Experiment with Ansible Using a Local VM
+This [repo](https://github.com/imaddine1/virtualBox-automated) has a similar setup to this project. I created it to help you explore different Ansible concepts without connecting to a real cloud VM. This way, you can apply your ideas with ease and peace of mind
+
 ## Project Overview
 
 This project builds on the recent "Inception" project by extending its functionality with a custom PHPMyAdmin service. The key improvements include:
