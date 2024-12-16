@@ -1,33 +1,33 @@
 #SPDX-License-Identifier: MIT-0
 ---
-# tasks file for setup
-# - name: Update and Upgrade apt packages
-#   apt:
-#     update_cache: true
-#     upgrade: dist
-#   ignore_errors: true 
+#tasks file for setup
+- name: Update and Upgrade apt packages
+  apt:
+    update_cache: true
+    upgrade: dist
+  ignore_errors: true 
 
-# - name: Install docker 
-#   apt:
-#     name: docker.io
-#     state: present
+- name: Install docker 
+  apt:
+    name: docker.io
+    state: present
 
-# - name: Install docker-compose
-#   apt:
-#     name: docker-compose
-#     state: present
+- name: Install docker-compose
+  apt:
+    name: docker-compose
+    state: present
   
-# - name: Create a directory for binding DB
-#   file:
-#     path: /etc/db
-#     state: directory
-#     mode: '0755'
+- name: Create a directory for binding DB
+  file:
+    path: /etc/db
+    state: directory
+    mode: '0755'
   
-# - name: Create a directory for binding Wordpress
-#   file:
-#     path: /etc/files
-#     state: directory
-#     mode: '0755'
+- name: Create a directory for binding Wordpress
+  file:
+    path: /etc/files
+    state: directory
+    mode: '0755'
 
 
 - name: Copy files to remote node
