@@ -46,3 +46,6 @@ Roles in Ansible help organize tasks and files. While roles create multiple fold
 tasks/: This folder contains the automation tasks or plays that Ansible runs on the target nodes.
 
 files/: This folder holds files to be copied to remote nodes as part of the automation process.
+
+handlers/: This folder contains tasks that are executed only when notified.
+
