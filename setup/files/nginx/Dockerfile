@@ -18,13 +18,13 @@ RUN chown -R www-data.www-data /var/www/ \
 
 #COPY website /var/www/html
 # CREATE CERTIFICATE TO USING HTTPS
-# RUN apt-get -y install openssl
+RUN apt-get -y install openssl
 
 #index.nginx-debian.html
-# RUN mkdir /etc/nginx/ssl
+RUN mkdir -p /etc/nginx/ssl
 
-# RUN cd /etc/nginx/ssl && openssl req -x509 -nodes -batch  -newkey rsa:2048 -keyout /etc/nginx/ssl/private.key -out /etc/nginx/ssl/ca.crt
+RUN cd /etc/nginx/ssl && openssl req -x509 -nodes -batch  -newkey rsa:2048 -keyout /etc/nginx/ssl/private.key -out /etc/nginx/ssl/ca.crt
 
 # Expose the port for access
-EXPOSE 80
+EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]

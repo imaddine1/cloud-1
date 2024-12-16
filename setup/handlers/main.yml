@@ -1,3 +1,9 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # handlers file for setup
+- name: run docker-compose
+  shell: "docker-compose down --rmi all ; docker-compose up --build -d"
+  args: 
+    chdir: /home/application
+  async: 600
+  poll: 60

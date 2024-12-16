@@ -55,7 +55,7 @@ services:
     container_name: nginx-cont
     image: nginx:mytag
     ports:
-      - "80:80"
+      - "443:443"
     restart: always
     volumes:
       - Wordpress:/var/www/wordpress
