@@ -28,22 +28,24 @@
     path: /etc/files
     state: directory
     mode: '0755'
+  
+- name: Create a directory for my application
+  file:
+    path: /home/application
+    state: directory
+    mode: '0755'
 
+- name: Copy the .env file
+  ansible.builtin.template:
+    src: ../templates/data.j2 
+    dest: /home/application/.env
 
-- name: Copy files to remote node
+- name: Copy files only if different
   ansible.builtin.copy:
     src: files/
     dest: /home/application/
-    mode: '0755'
-    force: false
   notify: run docker-compose
 
-  
-- name: Export the IP address of the remote node to .env
-  lineinfile:
-    path: /home/application/.env
-    line: "IP={{ ansible_host }}"
-    create: true
 
 
 

@@ -1,8 +1,8 @@
 #SPDX-License-Identifier: MIT-0
 galaxy_info:
-  author: your name
-  description: your role description
-  company: your company (optional)
+  author: imad harile
+  description: manage the deployment on a two remote VMs
+  company: 1337 school
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
