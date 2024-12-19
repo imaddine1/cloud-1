@@ -123,7 +123,13 @@ Example Of a Playbook:
 
 ```
 
-- the keyword `name` is like a `comment` describing what y'll do 
+- the keyword start wiht `- name` is like a `comment` describing what y'll do 
 - the keyword `hosts` can take name of group from `inventory file`
 - The PlayBook can have multiple `plays` means connect to a specific host or hosts and apply to them what inside `tasks`
+- The `tasks` keywords udner it `- name` under it the name of the `module` like `ansible.builtin.yum`, those modules have some arguments,
+    and that module executed inside the remote Vms
+
+There is a bunch of differents `attributes` you can use, and thousands of built-in `modules` , we'll talk about them later
+
+
 
