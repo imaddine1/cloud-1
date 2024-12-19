@@ -25,16 +25,16 @@ You can use already made images from DockerHub.
 These concepts that I will cover, you will use them, so pay attention to each headline and try to understand it before moving to the next one. They may seem separate and meaningless at first glance, but after we combine them, they will make sense.
 
 <details>
+    <summary>The Concepts that I will cover</summary>
 
-  <summary>The Concepts that I will cover</summary>
-    - The power of ansible
-    - Inventory File
-    - Vars
-    - PlayBooks
-    - Modules && Plugins
-    - Roles
-    - Security
-    - Conclusion
+- The power of ansible
+- Inventory File
+- Vars
+- PlayBooks
+- Modules && Plugins
+- Roles
+- Security
+- Conclusion
 </details>
 
 
@@ -82,3 +82,48 @@ You may not again know all this stuff but be patient, just knowing we are using 
 [You_Can_Learn_More_About_Variables_Here](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html)
 
 ## PlayBooks
+
+Now, we are on the most important section, where you'll interact with it a lot, and it is the core of Ansible. This part is responsible for communicating with your remote VMs using `YAML syntax` and giving them all the instructions to install what you need on those remote VMs
+
+Example Of a Playbook:
+
+```
+---
+
+#------------------------------------------ First Plays ------------------ #
+- name: Update web servers                                
+  hosts: webservers                                         
+  remote_user: root                                               
+    
+  tasks:                                                     
+  - name: Ensure apache is at the latest version              
+    ansible.builtin.apt:                                     
+      name: httpd                                          
+      state: latest
+
+  - name: Write the apache config file                        
+    ansible.builtin.template:                              
+      src: /srv/httpd.j2                                     
+      dest: /etc/httpd.conf                                 
+# ---------------------------------------Second Plays ----------------#
+- name: Update db servers
+  hosts: databases
+  remote_user: root
+
+  tasks:
+  - name: Ensure postgresql is at the latest version
+    ansible.builtin.yum:
+      name: postgresql
+      state: latest
+
+  - name: Ensure that postgresql is started
+    ansible.builtin.service:
+      name: postgresql
+      state: started
+
+```
+
+- the keyword `name` is like a `comment` describing what y'll do 
+- the keyword `hosts` can take name of group from `inventory file`
+- The PlayBook can have multiple `plays` means connect to a specific host or hosts and apply to them what inside `tasks`
+
