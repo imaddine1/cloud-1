@@ -27,14 +27,14 @@ These concepts that I will cover, you will use them, so pay attention to each he
 <details>
     <summary>The Concepts that I will cover</summary>
 
-- The power of ansible
-- Inventory File
-- Vars
-- PlayBooks
-- Modules && Plugins
-- Roles
-- Security
-- Conclusion
+* [X] The power of ansible
+* [X] Inventory File
+* [X] Vars
+* [X] PlayBooks
+* [X] Modules && Plugins
+* [ ] Roles
+* [ ] Security
+* [ ] Conclusion
 </details>
 
 
