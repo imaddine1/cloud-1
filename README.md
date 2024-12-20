@@ -131,5 +131,43 @@ Example Of a Playbook:
 
 There is a bunch of differents `attributes` you can use, and thousands of built-in `modules` , we'll talk about them later
 
+You can ran the playbook by using this command `` ansible-playbook -i inventory.ini playbook.yml ``
+
+## Modules && Plugins
+
+`Modules` is a python script executed on the `remote machine`, so when i type inside my playbook :
+```
+- name: install vim
+  apt:
+    name: vim
+    state: present 
+```
+
+I can call `Module` using ansible `ad-hoc (command line interface)` like:
+
+```
+ansible webservers -m apt -a "name:vim state: present"
+``` 
+
+The Module `apt` with `argument`, you can know every Module what parameters takes, by clicking on `HERE` below .
+The Module transfered from `master node (my machine where you installed ansible)` to remote node using `SSH` and executed , and each module must return json fromat.
+The Module return result `changed, failed, msg, and other detials`, There is a thousands of modules created by ansible and the community , You can check The list of Modules [HERE](https://docs.ansible.com/ansible/latest/collections/index_module.html)
+You can write your own Module with any language that return json format and you can use `Modules` from other plate-form or customized them.
+
+`Plugins` is a python script also , most of plugins executed on the `master node (controler node)`, and just an information to know,
+You can call `Module` as `plugin task or plugin library`, they also say that module is a `type` of plugins,
+You can Create your own Module but you need to respect this rules:
+- be written in Python
+- raise errors
+- return strings in unicode
+- conform to Ansible’s configuration and documentation standards
+
+There is different Types of Plugins , You can Check [HERE](https://docs.ansible.com/ansible/latest/plugins/plugins.html)
+
+Just To Demonstrate the output you see , when you execute a playbook, the output is is formatted by a `plugin` ,  and you can change the format 
+of the output , you need to read about `ansible config file` if you want, I'll not talk about it , but you can check it [HERE](https://docs.ansible.com/ansible/latest/reference_appendices/config.html)  
+
+
+
 
 
