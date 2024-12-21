@@ -32,7 +32,7 @@ These concepts that I will cover, you will use them, so pay attention to each he
 * [X] Vars
 * [X] PlayBooks
 * [X] Modules && Plugins
-* [ ] Roles
+* [X] Role
 * [ ] Security
 * [ ] Conclusion
 </details>
@@ -135,7 +135,7 @@ You can ran the playbook by using this command `` ansible-playbook -i inventory.
 
 ## Modules && Plugins
 
-`Modules` is a python script executed on the `remote machine`, so when i type inside my playbook :
+`__Modules__` is a python script executed on the `remote machine`, so when i type inside my playbook :
 ```
 - name: install vim
   apt:
@@ -154,7 +154,7 @@ The Module transfered from `master node (my machine where you installed ansible)
 The Module return result `changed, failed, msg, and other detials`, There is a thousands of modules created by ansible and the community , You can check The list of Modules [HERE](https://docs.ansible.com/ansible/latest/collections/index_module.html)
 You can write your own Module with any language that return json format and you can use `Modules` from other plate-form or customized them.
 
-`Plugins` is a python script also , most of plugins executed on the `master node (controler node)`, and just an information to know,
+`__Plugins__` is a python script also , most of plugins executed on the `master node (controler node)`, and just an information to know,
 You can call `Module` as `plugin task or plugin library`, they also say that module is a `type` of plugins,
 You can Create your own Module but you need to respect this rules:
 - be written in Python
@@ -164,10 +164,95 @@ You can Create your own Module but you need to respect this rules:
 
 There is different Types of Plugins , You can Check [HERE](https://docs.ansible.com/ansible/latest/plugins/plugins.html)
 
-Just To Demonstrate the output you see , when you execute a playbook, the output is is formatted by a `plugin` ,  and you can change the format 
+Just To Demonstrate the output you see , when you execute a playbook, the output is formatted by a `plugin` ,  and you can change the format 
 of the output , you need to read about `ansible config file` if you want, I'll not talk about it , but you can check it [HERE](https://docs.ansible.com/ansible/latest/reference_appendices/config.html)  
 
 
+## Role
+`__Ansible Role__` is like a structured way to organize your playbooks. It helps you break down tasks into smaller, 
+reusable pieces, making your automation cleaner, easier to manage, and shareable.
+
+You can create your Role by use the next command:
+
+```
+ansible-galaxy init nameFolder
+```
+
+and you will git this structure:
+
+```
+├── nameFolder/
+    ├── tasks/         # List of tasks to execute
+    ├── vars/          # Variables specific to the role
+    ├── defaults/      # Default variables (can be overridden)
+    ├── handlers/      # Handlers for notifications (e.g., restarting services)
+    ├── templates/     # Jinja2 templates (e.g., config files)
+    ├── files/         # Static files to copy from your machine to the targeted machines.
+    ├── meta/          # Metadata about the role (dependencies, author info)
+```
+You can define Your `Role` inside the playbook like this:
+
+```
+- name: Install Some Packages
+  hosts: name_of_groups_of_hosts
+  roles:
+    - nameFolder
+```
+
+I think all The Folders inside the nameFolder have a clear meaning except `templates/` folder, This folder can take files of format `jinja2`,
+we use it , when we have a dynamic data like in my case i had two machines , and The `IP` of these two machines is different,
+i added all my static varialbes then i set `IP` variable with `{{ansible_host}}` .
+Jinja2 will understand that `{{ansible_host}}` need to be revealed , and that's what happen when i transfer my files inside templates/ folder
+to the remote machines , before transfer them, it reveal all the dynamic variables 
+
+If you want to read more about jinja2 templating [Check_Here](https://jinja.palletsprojects.com/en/stable/templates/)
+
+Example of what inside my file data.j2, beacuse now is encrypted you can't see it:
+
+```
+##### database informations #######
+MY_ROOT=root123
+MY_DATABASE=wordpress
+MY_USER=imad
+MY_PASS=imad123
+MY_HOST=db
+#Admin User
+AD_USER=supervisor
+AD_EMAIL=supervisor@gmail.com
+AD_PASS=supervisor123
+BLOG_TITLE=INCEPTION
+# SIMPLE USER 
+SP_USER=user
+SP_EMAIL=user@gmail.com 
+SP_PASS=user123
+   
+#### THIS IP OFTEST VM IS ######
+IP={{ ansible_host }}              ## This variable will be set by the right IP of the machine , ansible_host is inside inventory file
+```
+
+If you want to know more about Roles [Check_Here](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html)
+
+## Security
+
+This section will help you to secure your private data, like in my case i have data.j2 file inside it important variables, i used them
+to login to my DataBase, PHPMyAdmin and Wordpress , so i used the command `ansible-vault` to encrypt my file:
+
+```
+ansible-vault encrypt yourFile
+```
+
+The real data that i had is `The Example above under Role section`, then i encrypt the file with the above command, in my case i used
+`ansible.cfg` to set automatically where ansible can search about my password file, instead of provide it each time i run the `ansible-playbook` command
 
 
+There is more than one way to encrypt your sensible data, so you can read about it [HERE](https://docs.ansible.com/ansible/latest/vault_guide/index.html)
 
+## Conclusion
+
+I hope this `ReadMe` file helps and guides you on the right path to learning ansible, There are some conecpts i didn't meantion like
+`ansible collection` , `ansible tower` and `...Others` , I believe now you're equipped to search for anything you want to learn about ansible.
+
+Regarding `(42 network)`, The correction page emphasizes creating separate role for each service, This `Repo` currently uses a single Role 
+so changing it to multiple roles would be a great practice to follow.
+
+Now I can say thank you For Reading , See Yaaaaa .
