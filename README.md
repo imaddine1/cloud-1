@@ -33,8 +33,8 @@ These concepts that I will cover, you will use them, so pay attention to each he
 * [X] PlayBooks
 * [X] Modules && Plugins
 * [X] Role
-* [ ] Security
-* [ ] Conclusion
+* [X] Security
+* [X] Conclusion
 </details>
 
 
