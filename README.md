@@ -135,7 +135,11 @@ You can ran the playbook by using this command `` ansible-playbook -i inventory.
 
 ## Modules && Plugins
 
-`__Modules__` is a python script executed on the `remote machine`, so when i type inside my playbook :
+`__Modules__` is a python script executed on the `remote machine`, next is example of how we can use module apt:
+
+
+Example 1: Use apt module inside a `YAML` file, to install vim
+
 ```
 - name: install vim
   apt:
@@ -143,15 +147,19 @@ You can ran the playbook by using this command `` ansible-playbook -i inventory.
     state: present 
 ```
 
-I can call `Module` using ansible `ad-hoc (command line interface)` like:
+Example 2: Use apt Module with `ad-hoc` to install vim 
 
 ```
 ansible webservers -m apt -a "name:vim state: present"
+
 ``` 
 
-The Module `apt` with `argument`, you can know every Module what parameters takes, by clicking on `HERE` below .
+
+
+The Module `apt` have various `argument`, you can check every Module what parameters takes, by clicking on the link below .
 The Module transfered from `master node (my machine where you installed ansible)` to remote node using `SSH` and executed , and each module must return json fromat.
-The Module return result `changed, failed, msg, and other detials`, There is a thousands of modules created by ansible and the community , You can check The list of Modules [HERE](https://docs.ansible.com/ansible/latest/collections/index_module.html)
+The Module return result `changed, failed, msg, and other detials`, There is a thousands of modules created by ansible and the community , 
+You can check The list of Modules [HERE](https://docs.ansible.com/ansible/latest/collections/index_module.html)
 You can write your own Module with any language that return json format and you can use `Modules` from other plate-form or customized them.
 
 `__Plugins__` is a python script also , most of plugins executed on the `master node (controler node)`, and just an information to know,
