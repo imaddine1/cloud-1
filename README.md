@@ -135,7 +135,7 @@ You can ran the playbook by using this command `` ansible-playbook -i inventory.
 
 ## Modules && Plugins
 
-`__Modules__` is a python script executed on the `remote machine`, next is example of how we can use module apt:
+__`Modules`__ is a python script executed on the `remote machine`, next is example of how we can use module apt:
 
 
 Example 1: Use apt module inside a `YAML` file, to install vim
@@ -162,7 +162,7 @@ The Module return result `changed, failed, msg, and other detials`, There is a t
 You can check The list of Modules [HERE](https://docs.ansible.com/ansible/latest/collections/index_module.html)
 You can write your own Module with any language that return json format and you can use `Modules` from other plate-form or customized them.
 
-`__Plugins__` is a python script also , most of plugins executed on the `master node (controler node)`, and just an information to know,
+__`Plugins`__ is a python script also , most of plugins executed on the `master node (controler node)`, and just an information to know,
 You can call `Module` as `plugin task or plugin library`, they also say that module is a `type` of plugins,
 You can Create your own Module but you need to respect this rules:
 - be written in Python
